@@ -30,13 +30,6 @@ const errorMiddleware = (err, req, res, next) => {
 
         const statusCode = error.statusCode || 500;
 
-        // return res.status(statusCode).json({
-        //     success: false,
-        //     message: error.message,
-        //     error: err,
-        //     stack: err.stack
-        // });
-
         if (process.env.NODE_ENV === "development") {
             return res.status(statusCode).json({
                 success: false,
