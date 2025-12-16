@@ -1,23 +1,28 @@
 import express from 'express'
-import { PORT } from './config/env.js';
 import authRouter from './routes/auth.routes.js';
 import userRouter from './routes/user.routes.js';
 import subscriptionRouter from './routes/subscription.routes.js';
-import connectDB from './database/mongodb.js';
+import cookieParser from 'cookie-parser';
+import errorMiddleware from './middlewares/error.middleware.js';
 
 const app = express();
 
+// In-Built middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// Routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/subscriptions', subscriptionRouter)
 
+// Error handler
+app.use(errorMiddleware);
+
+// Welcome route
 app.get('/', (req, res) => {
     res.send('Welcome to the Subscription Tracker API!')
-});
-
-app.listen(PORT, () => {
-    connectDB();
-    console.log(`Subscription Tracker Api is running on http://localhost:${PORT}`);
 });
 
 export default app;
