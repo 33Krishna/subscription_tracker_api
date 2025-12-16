@@ -3,6 +3,7 @@ import { PORT } from './config/env.js';
 import authRouter from './routes/auth.routes.js';
 import userRouter from './routes/user.routes.js';
 import subscriptionRouter from './routes/subscription.routes.js';
+import connectDB from './database/mongodb.js';
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
+    connectDB();
     console.log(`Subscription Tracker Api is running on http://localhost:${PORT}`);
 });
 
