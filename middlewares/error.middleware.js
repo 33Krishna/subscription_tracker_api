@@ -1,10 +1,11 @@
-
+import log from '../utils/logger.js'
 
 const errorMiddleware = (err, req, res, next) => {
     try {
         let error = { ...err }
         error.message = err.message;
-        console.log(err);
+        
+        log.error(err);
 
         // Mongoose bad ObjectId
         if(err.name === 'CastError') {
@@ -27,7 +28,29 @@ const errorMiddleware = (err, req, res, next) => {
             error.statusCode = 400;
         }
 
-        res.status(error.statusCode || 500).json({ success: false, error: error.message || 'Server Error' });
+        const statusCode = error.statusCode || 500;
+
+        // return res.status(statusCode).json({
+        //     success: false,
+        //     message: error.message,
+        //     error: err,
+        //     stack: err.stack
+        // });
+
+        if (process.env.NODE_ENV === "development") {
+            return res.status(statusCode).json({
+                success: false,
+                message: error.message,
+                error: err,
+                stack: err.stack
+            });
+        }
+    
+        // PRODUCTION (clean output)
+        return res.status(statusCode).json({
+            success: false,
+            message: error.message || "Internal Server Error"
+        });
     } catch (error) {
         next(error);
     }
