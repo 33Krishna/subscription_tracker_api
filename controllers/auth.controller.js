@@ -70,5 +70,4 @@ export const signIn = catchAsync(async (req, res) => {
     );
 });
 
-
-export const signOut = async () => {}
+export const signOut = catchAsync(async () => {});
