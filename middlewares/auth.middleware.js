@@ -1,4 +1,4 @@
-import { JWT_SECRET } from "../config/env";
+import { JWT_SECRET } from "../config/env.js";
 import User from "../models/user.model.js";
 import ApiError from "../utils/ApiError.js";
 import catchAsync from "./catchAsync.js";

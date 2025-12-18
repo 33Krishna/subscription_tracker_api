@@ -4,7 +4,7 @@ import ApiResponse from '../utils/ApiResponse.js'
 import ApiError from '../utils/ApiError.js'
 
 export const getUsers = catchAsync(async (req, res) => {
-    const users = await User.find();
+    const users = await User.find().select('-password');
 
     if(!users) {
         throw new ApiError(404, 'Users not found!')
