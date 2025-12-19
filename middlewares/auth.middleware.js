@@ -10,12 +10,12 @@ const authorize = catchAsync(async (req, res, next) => {
         token = req.headers.authorization.split(' ')[1];
     }
 
-    if(!token) return new ApiError(401, 'Unauthorized');
+    if(!token) throw new ApiError(401, 'Unauthorized');
 
     const decoded = jwt.verify(token, JWT_SECRET);
     const user = await User.findById(decoded.userId)
 
-    if(!user) return new ApiError(401, 'Unauthorize');
+    if(!user) throw new ApiError(401, 'Unauthorize');
 
     req.user = user;
 

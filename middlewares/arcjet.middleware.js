@@ -6,10 +6,10 @@ const arcjetMiddleware = catchAsync(async (req, res, next) => {
     const decision = await aj.protect(req, { requested: 1 });
 
     if(decision.isDenied()) {
-        if(decision.reason.isRateLimit()) return new ApiError(429, 'Rate limit exceeded');
-        if(decision.reason.isBot()) return new ApiError(403, 'Bot detected')
+        if(decision.reason.isRateLimit()) throw new ApiError(429, 'Rate limit exceeded');
+        if(decision.reason.isBot()) throw new ApiError(403, 'Bot detected')
         
-        return ApiError(403, 'Access denied');
+        throw ApiError(403, 'Access denied');
     }
 
     next();

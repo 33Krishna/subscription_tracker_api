@@ -14,13 +14,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(arcjetMiddleware)
+// ArcJet shouldn't use globally -- Best Practice
+// app.use(arcjetMiddleware)
 
 // Routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', userRouter)
-app.use('/api/v1/subscriptions', subscriptionRouter)
-app.use('/api/v1/workflows', workflowRouter);
+app.use('/api/v1/subscriptions', arcjetMiddleware, subscriptionRouter)
+app.use('/api/v1/workflows', arcjetMiddleware, workflowRouter);
 
 // Error handler
 app.use(errorMiddleware);
