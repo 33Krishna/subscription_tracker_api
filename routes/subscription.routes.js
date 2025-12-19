@@ -8,6 +8,7 @@ subscriptionRouter.post('/create', authorize, createSubscription)
 subscriptionRouter.get('/user/:id', authorize, getUserSubscription)
 
 // Need to add
+subscriptionRouter.get('/', (req, res) => res.send({ title: 'GET all subscriptions' }));
 subscriptionRouter.get('/:id', (req, res) => res.send({ title: 'GET subscription details' }));
 subscriptionRouter.put('/:id', (req, res) => res.send({ title: 'UPDATE subscription' }));
 subscriptionRouter.delete('/:id', (req, res) => res.send({ title: 'DELETE subscription' }));
